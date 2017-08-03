@@ -1,55 +1,46 @@
 /*
  *  X: color (0: yellow, 1: orange)
- *  EP: 49152 (0xc000)
  */
 
-.pc = $c000
-.const TIMER = 4
+.pc = $0801 "Basic Upstart"
+:BasicUpstart(start)
+
+.pc = $0810 "Program"
+
 
 start: {
-  jsr init
-  jsr load
-  jmp loop
+	jsr init
+	jsr load
+	jmp loop
 }
 init: {
-  ldx 0
-  ldy 0
-  rts
+	ldx 0
+	rts
 }
 loop: {
-  cpy 0
-  beq pause
-  cpy TIMER
-  ldy 0
-  cpx 1 // check if orange
-  beq set_yellow
-  bne set_orange
+	cpx 1 // check if orange
+	beq set_yellow
+	bne set_orange
 }
 load: {
-  lda #$07
-  jsr write_screen
-  rts
+	lda #$07
+	jsr write_screen
+	rts
 }
 set_orange: {
-  lda #$08
-  jsr write_screen
-  ldx 1
-  jmp loop
+	lda #$08
+	jsr write_screen
+	ldx 1
+	jmp loop
 }
 set_yellow: {
-  lda #$07
-  jsr write_screen
-  ldx 0
-  jmp loop
+	lda #$07
+	jsr write_screen
+	ldx 0
+	jmp loop
 }
 write_screen: {
-  sta $D020
-  sta $D021
-  rts
-}
-pause: {
-  cpy TIMER
-  beq loop
-  iny
-  jmp pause
+	sta $D020
+	sta $D021
+	rts
 }
