@@ -3,9 +3,11 @@
 
 .pc = $0810 "Program"
 
+// note: 312 lines per frame
+
 preload:
-   lda #$7a
-   sta $00fb
+   lda #$7a // load the start line
+   sta $00fb // write it here
    jmp start
 
 start:
@@ -13,15 +15,15 @@ start:
    lda #$00
    sta $d011
    sta $d020
-   inc $00fb
-   ldy #$7a + $00fb
+   inc $00fb // next line
+   ldy $00fb // start from next line
    ldx #$00
    jmp loop
 
 loop:
    lda colors, X
    cpy $d012
-   bne *-3 // wait?
+   bne *-3 // line cycle
    sta $d020
    cpx #51
    beq start // end
