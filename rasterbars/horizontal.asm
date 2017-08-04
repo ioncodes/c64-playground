@@ -8,6 +8,8 @@
 preload:
    lda #$7a // load the start line
    sta $00fb // write it here
+   lda #1
+   sta $032e
    jmp start
 
 start:
@@ -15,8 +17,10 @@ start:
    lda #$00
    sta $d011
    sta $d020
-   inc $00fb // next line
-   ldy $00fb // start from next line
+   jsr check
+   //inc $00fb // next raster
+   jsr move
+   ldy $00fb // start from next raster
    ldx #$00
    jmp loop
 
@@ -30,6 +34,59 @@ loop:
    inx
    iny
    jmp loop
+
+check:
+   // check if end reached
+   ldx $d012
+   stx $02a7
+   .for(var i=0; i<51; i++) {
+      inc $02a7
+   }
+   ldx $02a7
+   cpx #312
+   beq debug // break
+
+   // check if start reached
+   ldx $d012
+   stx $02a7
+   cpx #0
+   beq debug // break
+
+   rts
+
+// could call @up and @down directly
+debug:
+   ldx $032e
+   cpx 1
+   beq @up
+   bne @down
+   rts
+   // brk
+
+up:
+   ldx 2
+   stx $032e
+   rts
+
+down:
+   ldx 1
+   stx $032e
+   rts
+
+move:
+   ldx $032e
+   cpx 1
+   beq move_down
+   bne move_up
+   rts
+
+move_up:
+   dec $00fb
+   rts
+
+move_down:
+   inc $00fb
+   rts
 
 colors:
    .byte $06,$06,$06,$0e,$06,$0e

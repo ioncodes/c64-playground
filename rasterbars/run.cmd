@@ -1,0 +1,1 @@
+x64 -autostart horizontal.prg +confirmexit
