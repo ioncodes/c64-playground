@@ -17,8 +17,7 @@ start:
    lda #$00
    sta $d011
    sta $d020
-   jsr check
-   //inc $00fb // next raster
+   jsr check // check if end/start reached
    jsr move
    ldy $00fb // start from next raster
    ldx #$00
@@ -39,29 +38,20 @@ check:
    // check if end reached
    ldx $d012
    stx $02a7
-   .for(var i=0; i<51; i++) {
+   .for(var i = 0; i < 51; i++) {
       inc $02a7
    }
    ldx $02a7
-   cpx #300
-   beq debug // break
+   cpx #300 // 312 - 12
+   beq up // switch to up movement
 
    // check if start reached
    ldx $d012
    stx $02a7
-   cpx #112
-   beq debug // break
+   cpx #112 // 100 + 12
+   beq down // switch to down movement
 
    rts
-
-// could call @up and @down directly
-debug:
-   ldx $032e
-   cpx 1
-   beq @up
-   bne @down
-   rts
-   // brk
 
 up:
    ldx 2
