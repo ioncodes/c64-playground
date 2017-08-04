@@ -43,13 +43,13 @@ check:
       inc $02a7
    }
    ldx $02a7
-   cpx #312
+   cpx #300
    beq debug // break
 
    // check if start reached
    ldx $d012
    stx $02a7
-   cpx #0
+   cpx #112
    beq debug // break
 
    rts
