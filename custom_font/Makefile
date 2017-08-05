@@ -1,2 +1,4 @@
+KICKASS=$(KICK_HOME)/kickass
+
 font.prg: font.asm
-	KickAss font.asm -o font.prg
+	$(KICKASS) font.asm -o font.prg

@@ -1,2 +1,4 @@
+KICKASS=$(KICK_HOME)/kickass
+
 horizontal.prg: horizontal.asm
-	KickAss horizontal.asm -o horizontal.prg
+	$(KICKASS) horizontal.asm -o horizontal.prg

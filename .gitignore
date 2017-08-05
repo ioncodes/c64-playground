@@ -2,3 +2,7 @@
 *.prg
 
 *.sym
+
+custom_font/\.DS_Store
+
+\.DS_Store
