@@ -1,4 +1,8 @@
 KICKASS=$(KICK_HOME)/kickass
 
-horizontal.prg: horizontal.asm
+all: horizontal vertical
+
+horizontal: horizontal.asm
 	$(KICKASS) horizontal.asm -o horizontal.prg
+vertical: vertical.asm
+	$(KICKASS) vertical.asm -o vertical.prg
