@@ -1,0 +1,1 @@
+x64 -autostart logo.prg +confirmexit
