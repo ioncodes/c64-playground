@@ -1,5 +1,9 @@
 KICKASS=$(KICK_HOME)/kickass
 
+ifeq ($(KICK_HOME),)
+KICKASS := kickass
+endif
+
 all: horizontal vertical
 
 horizontal: horizontal.asm
